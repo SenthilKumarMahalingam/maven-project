@@ -28,13 +28,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "scp -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
+                        bat "scp -vvv -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        bat "scp -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
+                        bat "scp -vvv -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
                     }
                 }
             }
