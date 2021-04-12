@@ -29,13 +29,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@3.85.148.209:/var/lib/tomcat7/webapps"
                     }
                 }
  
                 stage ("Deploy to Production"){
                     steps {
-                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@35.168.2.91:/var/lib/tomcat7/webapps"
                     }
                 }
             }
