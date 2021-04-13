@@ -31,14 +31,14 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "winscp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@3.85.148.209:/var/lib/tomcat7/webapps"
+                        sh "winscp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@3.85.148.209:/var/lib/tomcat7/webapps"
                         
                     }
                 }
  
                 stage ("Deploy to Production"){
                     steps {
-                        bat "winscp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@35.168.2.91:/var/lib/tomcat7/webapps"
+                        sh "winscp -i /home/jenkins/tomcat-demo.pem **/target/*.war ec2-user@35.168.2.91:/var/lib/tomcat7/webapps"
                     }
                 }
             }
