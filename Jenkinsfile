@@ -15,13 +15,14 @@ pipeline {
  
  
 stages{
-        stage('######################################## Build --- Building the project using Maven'){
+        stage('Build'){
             steps {
+               echo '######################################## Build'
                 bat 'mvn clean package'
             }
             post {
                 success {
-                    echo '######################################## Archive --- Now Archiving the war in the target folder...'
+                    echo '######################################## Archive'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
@@ -29,14 +30,16 @@ stages{
  
         stage ('Deployments'){
             parallel{
-                stage ('######################################## Deploy to Staging'){
+                stage ('Deploy to Staging'){
                     steps {
+                        echo '######################################## Deploy to Staging'
                         bat "copy C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\fullyAutomated\\webapp\\target\\*.war C:\\apache-tomcat-8.5.64\\webapps"
                     }
                 }
  
-                stage ("######################################## Deploy to Production"){
+                stage ("Deploy to Production"){
                     steps {
+                       echo '######################################## Deploy to Production'
                         bat "copy C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\fullyAutomated\\webapp\\target\\*.war C:\\apache-tomcat-8.5.64_Prod\\webapps"
                     }
                 }
