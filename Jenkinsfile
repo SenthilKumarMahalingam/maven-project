@@ -31,13 +31,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "cp C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/fullyAutomated/webapp/target/*.war C:/apache-tomcat-8.5.64/webapps"
+                        bat "copy C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/fullyAutomated/webapp/target/*.war C:/apache-tomcat-8.5.64/webapps"
                     }
                 }
  
                 stage ("Deploy to Production"){
                     steps {
-                        bat "cp C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/fullyAutomated/webapp/target/*.war C:/apache-tomcat-8.5.64_Prod/webapps"
+                        bat "copy C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/fullyAutomated/webapp/target/*.war C:/apache-tomcat-8.5.64_Prod/webapps"
                     }
                 }
             }
