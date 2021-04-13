@@ -4,7 +4,7 @@ pipeline {
     parameters { 
          string(name: 'tomcat_dev', defaultValue: '3.85.148.209', description: 'Staging Server')
          string(name: 'tomcat_prod', defaultValue: '35.168.2.91', description: 'Production Server')
-         string(name: 'Senthil_M', defaultValue: '"C:/Users/Senthil M/tomcat-demo.pem"', description: 'Filepath of pem') 
+         string(name: 'Senthil_M', defaultValue: '"/c/Users/Senthil M/tomcat-demo.pem"', description: 'Filepath of pem') 
     } 
     
     
@@ -31,13 +31,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@3.85.148.209:/var/lib/tomcat/webapps"
+                        bat "scp -i ${params.Senthil_M} **/target/*.war ec2-user@3.85.148.209:/var/lib/tomcat/webapps"
                     }
                 }
  
                 stage ("Deploy to Production"){
                     steps {
-                        bat "winscp -i ${params.Senthil_M} **/target/*.war ec2-user@35.168.2.91:/var/lib/tomcat/webapps"
+                        bat "scp -i ${params.Senthil_M} **/target/*.war ec2-user@35.168.2.91:/var/lib/tomcat/webapps"
                     }
                 }
             }
