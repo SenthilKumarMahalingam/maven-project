@@ -1,9 +1,23 @@
 pipeline {
     agent any
-    stages{
+    
+    parameters { 
+         string(name: 'tomcat_dev', defaultValue: '3.85.148.209', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '35.168.2.91', description: 'Production Server')
+         string(name: 'Senthil_M', defaultValue: '"c:/Users/Senthil M/tomcat-demo.pem"', description: 'Filepath of pem') 
+    } 
+    
+    
+ 
+    triggers {
+         pollSCM('* * * * *') // Polling Source Control
+     }
+ 
+ 
+stages{
         stage('Build'){
             steps {
-                bat'mvn clean package'
+                bat 'mvn clean package'
             }
             post {
                 success {
@@ -12,33 +26,21 @@ pipeline {
                 }
             }
         }
-        
+ 
+        stage ('Deployments'){
+            parallel{
                 stage ('Deploy to Staging'){
-            steps {
-                build job: 'DeployToTomcat'
-            }
-        }
-        
-        
-                stage ('Deploy to Production'){
-            steps{
-                timeout(time:5, unit:'DAYS'){
-                    input message:'Approve PRODUCTION Deployment?'
+                    steps {
+                        bat "cp  **/target/*.war C:\apache-tomcat-8.5.64\webapps"
+                    }
                 }
-
-                build job: 'DeploytoTomcatProd'
-            }
-            post {
-                success {
-                    echo 'Code deployed to Production.'
-                }
-
-                failure {
-                    echo ' Deployment failed.'
+ 
+                stage ("Deploy to Production"){
+                    steps {
+                        bat "cp **/target/*.war C:\apache-tomcat-8.5.64\webapps"
+                    }
                 }
             }
         }
-        
-        
     }
 }
