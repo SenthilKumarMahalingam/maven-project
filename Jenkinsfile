@@ -9,10 +9,7 @@ pipeline {
     
     
  
-    triggers {
-         pollSCM('* * * * *') // Polling Source Control
-     } 
- 
+
  
 stages{
         stage('Build'){
