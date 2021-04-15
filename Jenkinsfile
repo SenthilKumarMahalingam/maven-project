@@ -11,7 +11,7 @@ pipeline {
  
     triggers {
          pollSCM('* * * * *') // Polling Source Control
-     }
+     } 
  
  
 stages{
@@ -19,31 +19,11 @@ stages{
             steps {
                echo '######################################## Build'
                 bat 'mvn clean package'
+                bat ""docker build . -t tomcatwebapp:${env.BUILD_ID}"
             }
-            post {
-                success {
-                    echo '######################################## Archive'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
+          
         }
  
-        stage ('Deployments'){
-            parallel{
-                stage ('Deploy to Staging'){
-                    steps {
-                        echo '######################################## Deploy to Staging'
-                        bat "copy C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\fullyAutomated\\webapp\\target\\*.war C:\\apache-tomcat-8.5.64\\webapps"
-                    }
-                }
- 
-                stage ("Deploy to Production"){
-                    steps {
-                       echo '######################################## Deploy to Production'
-                        bat "copy C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\fullyAutomated\\webapp\\target\\*.war C:\\apache-tomcat-8.5.64_Prod\\webapps"
-                    }
-                }
-            }
-        }
+       
     }
 }
